@@ -1,25 +1,52 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-
 buildscript {
-    
+    ext {
+        //Ref : https://developer.android.com/build/releases/past-releases
+        agp_gradle = libs.versions.agp.version.get()
+        kotlin_version = libs.versions.kotlin.version.get()
+    }
     repositories {
-        google()
-        jcenter()
+        gradlePluginPortal()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+        mavenCentral()
+        google {
+//            content {
+//                includeGroupByRegex("com\\.android.*")
+//                includeGroupByRegex("com\\.google.*")
+//                includeGroupByRegex("androidx.*")
+//            }
+        }
+        maven {
+            url "https://raw.githubusercontent.com/cybernhl/maven-repository/master/"
+        }
+
+        maven {
+            url = uri('https://jitpack.io')
+        }
+        maven {
+            url = uri('https://s3.amazonaws.com/repo.commonsware.com')
+        }
+        maven {
+            url = uri('https://maven.pkg.jetbrains.space/public/p/compose/dev')
+        }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.4.0'
-        
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        classpath "com.android.tools.build:gradle:$agp_gradle"
     }
 }
 
+//Ref : https://stackoverflow.com/questions/37555196/in-gradle-how-to-use-a-variable-for-a-plugin-version
+
+plugins {
+    id 'org.jetbrains.kotlin.android' version "${kotlin_version}" apply false
+}
+
 allprojects {
-    repositories {
-        google()
-        jcenter()
-    }
+//    repositories {
+//        google()
+//        jcenter()
+//    }
 }
 
 task clean(type: Delete) {
